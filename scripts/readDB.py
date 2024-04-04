@@ -32,7 +32,7 @@ def initialize_database():
         exit(1)
 
 def get_spotdl_executable():
-    matching_files = glob.glob("scripts/spotdl*")
+    matching_files = glob.glob("spotdl*")
     if matching_files:
          return os.path.basename(matching_files[0])
     else:
@@ -57,9 +57,7 @@ def process_playlists(cursor, conn, last_scan, spotdl_executable):
         else:
             if frequency != -1:
                 print(f"[{get_timestamp()}] Downloading {url}")
-                os.chdir("scripts")
                 os.system(f"./{spotdl_executable} download {url}")
-                os.chdir("..")
                 cursor.execute("UPDATE Playlists SET lastDownload = %s WHERE id = %s", (int(time.time()), id))
                 conn.commit()
 
