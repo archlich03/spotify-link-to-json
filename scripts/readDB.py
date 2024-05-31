@@ -41,6 +41,9 @@ def get_spotdl_executable():
 def get_timestamp():
     return datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
 
+def sort_songs():
+    os.system("python3 scripts/organizemutagen.py")
+
 def process_playlists(cursor, conn, last_scan, spotdl_executable):
 
     print(f"[{get_timestamp()}] Beginning the reading of all inserted entries.")
@@ -89,6 +92,7 @@ def main():
     cursor.close()
     conn.close()
     print(f"[{get_timestamp()}] DB connection closed. The process is finished!")
+    sort_songs()
 
 if __name__ == "__main__":
     main()
